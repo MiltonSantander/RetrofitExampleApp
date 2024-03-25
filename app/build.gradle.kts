@@ -37,6 +37,7 @@ android {
 
 dependencies {
 
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     val retrofitVersion = "2.10.0"
     val coroutinesVersion = "1.8.1-Beta"
     val lifecycleVersion = "2.7.0"
