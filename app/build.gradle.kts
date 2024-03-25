@@ -37,6 +37,23 @@ android {
 
 dependencies {
 
+    val retrofitVersion = "2.10.0"
+    val coroutinesVersion = "1.8.1-Beta"
+    val lifecycleVersion = "2.7.0"
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    //coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    // Annotation processor
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")
+    //okhttp
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
