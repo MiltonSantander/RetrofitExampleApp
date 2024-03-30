@@ -9,24 +9,31 @@ import androidx.lifecycle.liveData
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var retrofit: AlbumAPI
+    private lateinit var textView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val textView = findViewById<TextView>(R.id.text_view)
-        val retrofit = RetrofitInstance.getRetrofitInstance().create(AlbumAPI::class.java)
-        val response: LiveData<Response<AlbumList>> = liveData {
-            /*emit(retrofit.getAlbumList())*/
-            /*emit(retrofit.getSortedAlbumList(3))*/
-        }
-        val singleAlbumResponse: LiveData<Response<Album>> = liveData {
+        retrofit = RetrofitInstance.getRetrofitInstance().create(AlbumAPI::class.java)
+        textView = findViewById(R.id.text_view)
+        /*setUpRequestWithQueryParameters()*/
+        setUpRequestWithPathParameters()
+    }
+
+    private fun setUpRequestWithPathParameters() {
+        liveData {
             emit(retrofit.getAlbum(5))
-        }
-        singleAlbumResponse.observe(this) {
+        }.observe(this) {
             textView.text = " " + "Album title: " + it.body()?.title + "\n" +
                     " " + "Album id: " + it.body()?.id + "\n" +
                     " " + "User id: " + it.body()?.userId + "\n\n\n"
         }
-        response.observe(this) { albumList ->
+    }
+
+    private fun setUpRequestWithQueryParameters() {
+        liveData {
+            emit(retrofit.getSortedAlbumList(3))
+        }.observe(this) { albumList ->
             albumList.body()?.forEach {
                 Log.i("logtest", it.title)
                 val album = " " + "Album title: " + it.title + "\n" +
