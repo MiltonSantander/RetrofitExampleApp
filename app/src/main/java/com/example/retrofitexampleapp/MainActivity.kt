@@ -17,16 +17,20 @@ class MainActivity : AppCompatActivity() {
         retrofit = RetrofitInstance.getRetrofitInstance().create(AlbumAPI::class.java)
         textView = findViewById(R.id.text_view)
         /*setUpRequestWithQueryParameters()*/
-        setUpRequestWithPathParameters()
+        /*setUpRequestWithPathParameters()*/
+        saveNewAlbum()
     }
 
     private fun setUpRequestWithPathParameters() {
         liveData {
             emit(retrofit.getAlbum(5))
         }.observe(this) {
-            textView.text = " " + "Album title: " + it.body()?.title + "\n" +
-                    " " + "Album id: " + it.body()?.id + "\n" +
-                    " " + "User id: " + it.body()?.userId + "\n\n\n"
+            textView.text = getString(
+                R.string.textview_text,
+                it.body()?.title,
+                it.body()?.id,
+                it.body()?.userId
+            )
         }
     }
 
@@ -36,11 +40,27 @@ class MainActivity : AppCompatActivity() {
         }.observe(this) { albumList ->
             albumList.body()?.forEach {
                 Log.i("logtest", it.title)
-                val album = " " + "Album title: " + it.title + "\n" +
-                        " " + "Album id: " + it.id + "\n" +
-                        " " + "User id: " + it.userId + "\n\n\n"
-                textView.append(album)
+                textView.text = getString(
+                    R.string.textview_text,
+                    it.title,
+                    it.id,
+                    it.userId
+                )
             }
+        }
+    }
+
+    private fun saveNewAlbum() {
+        liveData {
+            emit(retrofit.saveNewAlbum(Album(101, "Thunderstruck", 234)))
+        }.observe(this) {
+            Log.i("newAlbum", it.body().toString())
+            textView.text = getString(
+                R.string.textview_text,
+                it.body()?.title,
+                it.body()?.id,
+                it.body()?.userId
+            )
         }
     }
 }

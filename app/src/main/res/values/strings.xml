@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RetrofitExampleApp</string>
+    <string name="textview_text">Album title: %1$s \nAlbum id: %2$d \nUser id: %3$d \n\n\n</string>
 </resources>
